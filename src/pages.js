@@ -4,10 +4,10 @@ import { loadRandomSong } from "./music-player.js";
 import win from "./assets/audio/win.mp3"
 import error from "./assets/audio/error.mp3"
 import guess from "./assets/guess.svg"
+import { pauseSong } from "./music-player.js"
 
 const answersList = document.querySelectorAll(".answers-item");
 const birdClass = document.querySelectorAll(".bird-class-item");
-const instructions = document.querySelectorAll(".instruction");
 const birdCardImage = document.getElementById("bird-card-image");
 const cardList = document.querySelectorAll(".card-list-item");
 const birdDescription = document.getElementById("bird-description");
@@ -19,7 +19,9 @@ const scoreCount = document.getElementById("score");
 
 
 const winAudio = new Audio(win);
+winAudio.volume = 0.25;
 const errorAudio = new Audio(error);
+errorAudio.volume = 0.5;
 let count = 0;
 let countTry = 5;
 let score = 0;
@@ -29,18 +31,20 @@ let random;
 
 function randomAnswers(){
 	random = randomize(6,6);
-	count++;
-	if(count > 2){
+	if(count > 0){
 		unknownBird = loadRandomSong();
 		unknownBirdName = birdsData[unknownBird[0]][unknownBird[1]].name;
 	}
+	count++;
 	for(let i = 0; i < answersList.length; i++){
 		answersList[i].innerHTML = birdsData[unknownBird[0]][random[i]].name;
+		answersList[i].style = "background-color: #303030";
 	}
 	for(let i = 0; i < birdClass.length; i++){
 		birdClass[i].style.background = "";
 	}
 	birdClass[unknownBird[0]].style.background = "#303030";
+	nextLevelBtn.removeEventListener("click", nextLevelPage);
 }
 
 randomAnswers();
@@ -54,6 +58,7 @@ function selectCards(e){
 	cardList[1].innerHTML = birdInfo.species;
 	birdDescription.innerHTML = birdInfo.description;
 	cardAudio.src = birdInfo.audio;
+	pauseSong('card');
 }
 
 function selectAnswer(e){
@@ -75,13 +80,18 @@ function selectAnswer(e){
 		errorAudio.play();
 		e.target.style = "background-color: #D84237";
 		countTry--;
+		e.target.removeEventListener("click", selectAnswer);
 	}
 }
 
 function nextLevelPage(){
+	addEvents();
 	randomAnswers();
+	nextLevelBtn.style.background = "";
+	nextLevelBtn.style.cursor = "";
 	birdUnknownName.innerHTML = "******";
 	guessBird.src = guess;
+	pauseSong('unknown');
 }
 
 function removeEventListeners(){
@@ -104,6 +114,7 @@ function addNextLevel(){
 	nextLevelBtn.style.cursor = "pointer";
 
 	nextLevelBtn.addEventListener("click", nextLevelPage);
+	console.log(count)
 }
 
 addEvents();

@@ -32,6 +32,7 @@ function playSong(e){
 		playIconUnknown.classList.remove("fa-play");
 		playIconUnknown.classList.add("fa-pause");
 
+		unknownBirdSong.volume = 0.4;
 		unknownBirdSong.play();
 	}
 
@@ -40,11 +41,29 @@ function playSong(e){
 		playIconCard.classList.remove("fa-play");
 		playIconCard.classList.add("fa-pause");
 
+		birdCardSong.volume = 0.4;
 		birdCardSong.play();
 	}
 }
 
 function pauseSong(e){
+	switch(e){
+		case 'card':
+			playCardBtn.classList.remove("play");
+			playIconCard.classList.remove("fa-pause");
+			playIconCard.classList.add("fa-play");
+	
+			birdCardSong.pause();
+			return;
+		case 'unknown':
+			playRandomBtn.classList.remove("play");
+			playIconUnknown.classList.remove("fa-pause");
+			playIconUnknown.classList.add("fa-play");
+	
+			unknownBirdSong.pause();
+			return;
+	}
+
 	if(e.target.id === "play-unknown"){
 		playRandomBtn.classList.remove("play");
 		playIconUnknown.classList.remove("fa-pause");
@@ -107,4 +126,4 @@ birdCardSong.addEventListener("timeupdate", updateProgress);
 progressContainerUnknown.addEventListener("click", setProgress);
 progressContainer.addEventListener("click", setProgress);
 
-export {loadRandomSong}
+export {loadRandomSong, pauseSong}

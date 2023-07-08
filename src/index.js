@@ -17,5 +17,3 @@ schoolImg.src = school;
 
 const gameIcon = document.getElementById("game-logo");
 gameIcon.src = logo;
-
-console.log(123);
