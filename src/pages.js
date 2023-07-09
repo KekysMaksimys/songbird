@@ -4,7 +4,7 @@ import { loadRandomSong } from "./music-player.js";
 import win from "./assets/audio/win.mp3"
 import error from "./assets/audio/error.mp3"
 import guess from "./assets/guess.svg"
-import { pauseSong } from "./music-player.js"
+import { pauseSong, playingGameAgain} from "./music-player.js"
 
 const answersList = document.querySelectorAll(".answers-item");
 const birdClass = document.querySelectorAll(".bird-class-item");
@@ -13,10 +13,23 @@ const cardList = document.querySelectorAll(".card-list-item");
 const birdDescription = document.getElementById("bird-description");
 const cardAudio = document.getElementById("bird-card-song");
 const guessBird = document.getElementById("guess-bird-image");
-const birdUnknownName = document.getElementById("bird-unknown-name");
+let birdUnknownName = document.getElementById("bird-unknown-name");
 const nextLevelBtn = document.getElementById("next-level");
 const scoreCount = document.getElementById("score");
+const quizQuestion = document.querySelector('.unknown-bird-section')
 
+const quizSolve = document.createElement('div');
+quizSolve.className = 'quiz-solved';
+quizSolve.innerHTML = `
+	<div class="congratulation">
+		<h3 class="congratulation-score"></h3>
+	</div>
+	<div class="try-again">
+		<button id="try-again-game">
+			↺ Try again
+		</button>
+	</div>
+`
 
 const winAudio = new Audio(win);
 winAudio.volume = 0.25;
@@ -85,19 +98,63 @@ function selectAnswer(e){
 }
 
 function nextLevelPage(){
+	pauseSong('unknown');
+	if(count === 6){
+		quizSolved();
+		return;
+	}
 	addEvents();
 	randomAnswers();
 	nextLevelBtn.style.background = "";
 	nextLevelBtn.style.cursor = "";
 	birdUnknownName.innerHTML = "******";
 	guessBird.src = guess;
-	pauseSong('unknown');
+}
+
+function quizSolved(){
+	let quizSection = quizQuestion.innerHTML;
+	let quiz = 'quiz';
+	localStorage.setItem(quiz, quizSection);
+	quizQuestion.innerHTML = '';
+	quizQuestion.append(quizSolve);
+	const congratulationScore = document.querySelector('.congratulation-score');
+	congratulationScore.innerText = `
+	Hooray, you solve game with ${score} Points.
+	You score: ${score}/30
+	`;
+	removeSelectingCard();
+	const tryAgain = document.getElementById("try-again-game");
+	tryAgain.addEventListener('click', playGameAgain);
 }
 
 function removeEventListeners(){
 	for(let i = 0; i < answersList.length; i++){
 		answersList[i].removeEventListener("click", selectAnswer);
 	}
+}
+
+function removeSelectingCard(){
+	for(let i = 0; i < answersList.length; i++){
+		answersList[i].removeEventListener("click", selectCards);
+	}
+}
+
+function playGameAgain(){
+	count = 0;
+	score = 0;
+	quizQuestion.innerHTML = '';
+	quizQuestion.innerHTML = `${localStorage.getItem('quiz')}`
+	nextLevelBtn.style.background = "";
+	nextLevelBtn.style.cursor = "";
+	birdUnknownName = document.getElementById("bird-unknown-name");
+	birdUnknownName.innerHTML = "******";
+	guessBird.src = guess;
+	playingGameAgain();
+	unknownBird = loadRandomSong();
+	unknownBirdName = birdsData[unknownBird[0]][unknownBird[1]].name;
+	randomAnswers();
+	addEvents()
+	localStorage.clear();
 }
 
 function addEvents(){

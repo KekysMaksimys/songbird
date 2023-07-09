@@ -1,15 +1,16 @@
 import birdsData from "./birds.js"
 import {randomize} from "./random.js"
 
-const playRandomBtn = document.getElementById("play-unknown");
+let playRandomBtn = document.getElementById("play-unknown");
+let playIconUnknown = document.getElementById("unknown");
+let unknownBirdSong = document.getElementById("unknown-bird-song");
+let progressUnknown = document.getElementById("progress-unknown");
+let progressContainerUnknown = document.getElementById("progress-container-unknown");
+
 const playCardBtn = document.getElementById("play-card");
-const playIconUnknown = document.getElementById("unknown");
 const playIconCard = document.getElementById("card");
-const unknownBirdSong = document.getElementById("unknown-bird-song");
 const birdCardSong = document.getElementById("bird-card-song");
-const progressUnknown = document.getElementById("progress-unknown");
 const progress = document.getElementById("progress");
-const progressContainerUnknown = document.getElementById("progress-container-unknown");
 const progressContainer = document.getElementById("progress-container");
 
 let count = 0;
@@ -117,6 +118,22 @@ const playButton = e => {
 	}
 }
 
+function playingGameAgain(){
+	getElemnetsAfterGame();
+	playRandomBtn.addEventListener("click", playButton);
+	unknownBirdSong.addEventListener("timeupdate", updateProgress);
+	progressContainerUnknown.addEventListener("click", setProgress);
+	count = 0;
+}
+
+function getElemnetsAfterGame(){
+	playRandomBtn = document.getElementById("play-unknown");
+  playIconUnknown = document.getElementById("unknown");
+	unknownBirdSong = document.getElementById("unknown-bird-song");
+	progressUnknown = document.getElementById("progress-unknown");
+	progressContainerUnknown = document.getElementById("progress-container-unknown");
+}
+
 playRandomBtn.addEventListener("click", playButton);
 playCardBtn.addEventListener("click", playButton);
 
@@ -126,4 +143,4 @@ birdCardSong.addEventListener("timeupdate", updateProgress);
 progressContainerUnknown.addEventListener("click", setProgress);
 progressContainer.addEventListener("click", setProgress);
 
-export {loadRandomSong, pauseSong}
+export {loadRandomSong, pauseSong, playingGameAgain}

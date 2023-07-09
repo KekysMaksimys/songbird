@@ -117,6 +117,41 @@ html{
 	min-height: 140px;
 }
 
+.quiz-solved{
+	display: grid;
+	background-color: #303030;
+	border-radius: 15px;
+	padding-left: 7%;
+	min-height: 140px;
+	margin-top: 1em;
+	grid-template-columns: 40% 30%;
+}
+
+.congratulation{
+	align-self: center;
+	justify-self: center;
+}
+
+.congratulation-score{
+	color: aliceblue;
+}
+
+.try-again{
+	align-self: center;
+	justify-self: center;
+	width: 70%;
+}
+
+#try-again-game{
+	background-color: #3AC086;
+	border: 1px solid #3AC086;
+	border-radius: 5px;
+	width: 40%;
+	color:aliceblue;
+	font-weight: bold;
+	cursor: pointer;
+}
+
 .unknown-bird-item {
 	display: grid;
 }
