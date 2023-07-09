@@ -164,6 +164,7 @@ html{
 	display: grid;
 	grid-template-columns: 30px 60%;
 	column-gap: 3%;
+	row-gap: 3%;
 }
 
 #play-card, #play-unknown{
@@ -236,7 +237,7 @@ html{
 	max-height: 200px;
 	padding: 5% 0 2% 5%;
 	display: grid;
-	grid-template-columns: 50% 37%;
+	grid-template-columns: 50% 45%;
 	column-gap: 6%;
 }
 
@@ -252,10 +253,11 @@ html{
 }
 
 .card-list{
+	min-height: 150px;
 	display: grid;
 	grid-template-rows: repeat(2, 20%) 1fr;
 	padding-left: 5px;
-	row-gap: 5%;
+	row-gap: 6%;
 }
 
 .card-list-item{
@@ -354,5 +356,35 @@ html{
 	#answers{
 		grid-template-columns: 30% 67%;
 		column-gap: 3%;
+	}
+
+	.bird-card{
+		column-gap: 2%;
+	}
+
+	.card-list-item{
+		font-size: medium;
+		font-weight: 500;
+	}
+
+	.quiz-solved{
+		min-height: 120px;
+		margin-top: 1em;
+		grid-template-columns: 60% 30%;
+		column-gap: 4%;
+	}
+
+	.congratulation{
+		align-self: start;
+		justify-self: start;
+	}
+
+	.try-again{
+		width: 100%;
+	}
+	
+	#try-again-game{
+		width: 100%;
+		font-size: small;
 	}
 }
