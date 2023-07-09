@@ -31,7 +31,7 @@ html{
 
 #game{
 	max-width: 1140px;
-	margin: 30px auto 0 auto;
+	margin: 1% auto 0 auto;
 	display: grid;
 	padding-left: 5px;
 	padding-right: 5px;
@@ -341,6 +341,11 @@ html{
 }
 
 @media screen and (max-width: 768px) {
+
+	#header{
+		grid-template-columns: 30% 40% 25%;
+	}
+	
 	#birds-class{
 		height: 73px;
 		row-gap: 5px;
@@ -390,6 +395,16 @@ html{
 }
 
 @media screen and (max-width: 380px) {
+
+	#game{
+		margin: 0 auto 0 auto;
+	}
+
+	#header{
+		margin-top: 5px;
+		max-height: 70px;
+	}
+
 	#birds-class{
 		height: 90px;
 		row-gap: 10px;
