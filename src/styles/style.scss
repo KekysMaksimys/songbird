@@ -4,7 +4,7 @@
 };
 
 html{
-	height: 100%;
+	height: 101vh;
 }
 
 #page {
@@ -24,9 +24,10 @@ html{
   hsl(81deg 58% 70%) 80%,
   hsl(82deg 67% 68%) 100%
 	);
-	min-height: 100%;
+	height: 100vh;
 	display: grid;
 	grid-template-rows: 1fr auto;
+	overflow: hidden;
 };
 
 #game{
@@ -395,7 +396,6 @@ html{
 }
 
 @media screen and (max-width: 380px) {
-
 	#game{
 		margin: 0 auto 0 auto;
 	}
@@ -412,5 +412,9 @@ html{
 
 	.bird-class-item{
 		height: 100%;
+	}
+
+	.footer{
+		margin-top: 6%;
 	}
 }
