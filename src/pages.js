@@ -13,11 +13,15 @@ const cardList = document.querySelectorAll(".card-list-item");
 const birdDescription = document.getElementById("bird-description");
 const cardAudio = document.getElementById("bird-card-song");
 const guessBird = document.getElementById("guess-bird-image");
-let birdUnknownName = document.getElementById("bird-unknown-name");
+
+// not const because after try again game need to change
+let birdUnknownName = document.getElementById("bird-unknown-name"); 
+
 const nextLevelBtn = document.getElementById("next-level");
 const scoreCount = document.getElementById("score");
 const quizQuestion = document.querySelector('.unknown-bird-section')
 
+//solved section
 const quizSolve = document.createElement('div');
 quizSolve.className = 'quiz-solved';
 quizSolve.innerHTML = `
@@ -32,16 +36,17 @@ quizSolve.innerHTML = `
 `
 
 const winAudio = new Audio(win);
-winAudio.volume = 0.25;
+winAudio.volume = 0.25; //change volume
 const errorAudio = new Audio(error);
 errorAudio.volume = 0.5;
-let count = 0;
-let countTry = 5;
-let score = 0;
-let unknownBird = loadRandomSong();
-let unknownBirdName = birdsData[unknownBird[0]][unknownBird[1]].name;
+let count = 0; // level
+let countTry = 5; //max score for level
+let score = 0; //summary score
+let unknownBird = loadRandomSong();//load warmup song
+let unknownBirdName = birdsData[unknownBird[0]][unknownBird[1]].name;//load warmup bird
 let random;
 
+//load answers for quiz
 function randomAnswers(){
 	random = randomize(6,6);
 	if(count > 0){
@@ -62,6 +67,7 @@ function randomAnswers(){
 
 randomAnswers();
 
+//selecting card after correct answer
 function selectCards(e){
 	let index = Array.from(e.target.parentNode.children).indexOf(e.target);
 	let birdCardIndex = random[index];
@@ -74,6 +80,7 @@ function selectCards(e){
 	pauseSong('card');
 }
 
+//check wrong and correct answers
 function selectAnswer(e){
 	if(e.target.innerHTML === unknownBirdName){
 		errorAudio.pause();
@@ -97,6 +104,7 @@ function selectAnswer(e){
 	}
 }
 
+//upload next level
 function nextLevelPage(){
 	pauseSong('unknown');
 	if(count === 6){
@@ -111,6 +119,7 @@ function nextLevelPage(){
 	guessBird.src = guess;
 }
 
+//load congratulation section save previous section to localStorage
 function quizSolved(){
 	let quizSection = quizQuestion.innerHTML;
 	let quiz = 'quiz';
@@ -127,18 +136,21 @@ function quizSolved(){
 	tryAgain.addEventListener('click', playGameAgain);
 }
 
+//remove selecting answers after correct answer
 function removeEventListeners(){
 	for(let i = 0; i < answersList.length; i++){
 		answersList[i].removeEventListener("click", selectAnswer);
 	}
 }
 
+//remove selecting card after end of quiz
 function removeSelectingCard(){
 	for(let i = 0; i < answersList.length; i++){
 		answersList[i].removeEventListener("click", selectCards);
 	}
 }
 
+//playing game again upload section from localStorage and clear it
 function playGameAgain(){
 	count = 0;
 	score = 0;
@@ -157,6 +169,7 @@ function playGameAgain(){
 	localStorage.clear();
 }
 
+//add events to all answer list
 function addEvents(){
 	for(let i = 0; i < answersList.length; i++){
 		answersList[i].addEventListener("click", selectAnswer);
@@ -166,12 +179,12 @@ function addEvents(){
 	}
 }
 
+//change permissions to change level
 function addNextLevel(){
 	nextLevelBtn.style.background = "#3AC086";
 	nextLevelBtn.style.cursor = "pointer";
 
 	nextLevelBtn.addEventListener("click", nextLevelPage);
-	console.log(count)
 }
 
 addEvents();

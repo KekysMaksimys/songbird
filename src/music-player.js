@@ -13,8 +13,10 @@ const birdCardSong = document.getElementById("bird-card-song");
 const progress = document.getElementById("progress");
 const progressContainer = document.getElementById("progress-container");
 
+//count game level
 let count = 0;
 
+//take random song from birds.js and return name of bird
 function loadRandomSong(){
 	let random = randomize(6, 6)[0];
 	let randomSong = birdsData[count][random].audio;
@@ -48,6 +50,7 @@ function playSong(e){
 }
 
 function pauseSong(e){
+	//if we switch levels and card song stops
 	switch(e){
 		case 'card':
 			playCardBtn.classList.remove("play");
@@ -82,6 +85,7 @@ function pauseSong(e){
 	}
 }
 
+//visible progress bar for player
 function updateProgress(e){
 	let {duration, currentTime} = e.srcElement;
 	let progressPrecent = (currentTime / duration) * 100;
@@ -95,6 +99,7 @@ function updateProgress(e){
 	}
 }
 
+//responsive progress bar for user
 function setProgress(e){
 	let width = this.clientWidth;
 	let offsetX = e.offsetX;
@@ -107,7 +112,7 @@ function setProgress(e){
 	}
 }
 
-
+//changing play button
 const playButton = e => {
 	const isPlaying = e.target.classList.contains("play");
 
@@ -118,6 +123,7 @@ const playButton = e => {
 	}
 }
 
+//try again game update listeners
 function playingGameAgain(){
 	getElemnetsAfterGame();
 	playRandomBtn.addEventListener("click", playButton);
@@ -126,6 +132,7 @@ function playingGameAgain(){
 	count = 0;
 }
 
+//try again game update let
 function getElemnetsAfterGame(){
 	playRandomBtn = document.getElementById("play-unknown");
   playIconUnknown = document.getElementById("unknown");
